@@ -1,0 +1,40 @@
+.fuente {
+    font-size: 13px;
+}
+.btn-guarda {
+    margin-bottom: 5%;
+}
+.btn-add {
+    padding-top: 4.5%;
+}
+.btn-fuente {
+    font-size: 12px;
+}
+.alerta-vacio {
+    padding: 5px;
+    margin: 0;
+    margin-left: 36%;
+}
+.alerta {
+    padding: 0;
+    color: #d21212;
+    font-size: small;
+    width: 85%;
+}
+.espacio-alerta{
+    margin-bottom: 2px;
+}
+.cardP {
+    max-width: 50%;
+    max-height: 50%;
+    margin-left: 25%;
+}
+.cardC {
+    max-width: 133px;
+    margin-top: 5%;
+    max-height: 65px;
+} 
+.cardC img {
+    max-width: 133px;
+    max-height: 65px;
+}

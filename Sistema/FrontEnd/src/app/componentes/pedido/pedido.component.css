@@ -1,0 +1,26 @@
+.espacio {
+    width: 20%;
+}
+.espacioH {
+    width: 18%;
+}
+.inicio {
+    padding-left: 5%;
+    padding-right: 0;
+}
+.tabla {
+    padding-right: 5%;
+    padding-left: 5%;
+}
+.encabezado {
+padding-top: 2%;
+}
+.encabezado h4{
+    margin-bottom: 0;
+}
+.contacto {
+    padding-bottom: 0;
+}
+.contacto p{
+    margin-bottom: 1%;
+}

@@ -1,0 +1,52 @@
+{
+  "name": "categoria",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "nombreCategoria": {
+      "type": "string",
+      "required": true
+    },
+    "descripcionCategoria": {
+      "type": "string",
+      "default": "No especificado",
+      "required": false
+    },
+    "urlImagen": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "producto": {
+      "type": "hasMany",
+      "model": "producto",
+      "foreignKey": "idcategoria"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

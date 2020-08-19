@@ -1,0 +1,28 @@
+{
+  "db": {
+    "host": "us-cdbr-east-02.cleardb.com",
+    "port": 3306,
+    "url": "",
+    "database": "heroku_8fa71357a4fb2f0",
+    "password": "3dcf8242",
+    "name": "db",
+    "user": "bf96eae9d74ce22",
+    "connector": "mysql"
+  },
+  "Email": { 
+    "name": "Email",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "SMTP",
+        "host": "smtp.gmail.com",
+        "secure": true,
+        "port": 465,
+        "auth": {
+          "user": "cpmec.593@gmail.com",
+          "pass": "maillerr.593"
+        }
+      }
+    ]
+  }
+}

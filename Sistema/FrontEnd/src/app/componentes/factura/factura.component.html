@@ -1,0 +1,319 @@
+<app-navbar></app-navbar>
+
+<div class="encabezado">
+  <h4>Módulo orden de pedido</h4>
+  <div class="form-group form-search">
+    <mat-form-field class="busqueda">
+      <input matInput type="text" placeholder="Buscar cliente" [(ngModel)]="busquedaNumero">
+      <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="busquedaNumero=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="reciente-tab" data-toggle="tab" href="#reciente" role="tab" aria-controls="reciente"
+      aria-selected="true">Reciente</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="historial-tab" data-toggle="tab" href="#historial" role="tab" aria-controls="historial"
+      aria-selected="false">Historial</a>
+  </li>
+
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="reciente" role="tabpanel" aria-labelledby="reciente-tab">
+
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="pedido">N° de Pedido</th>
+                <th scope="col">Cliente</th>
+                <th scope="col" class="celdaBoton">Estado</th>
+                <th scope="col" class="celdaBoton">&nbsp;</th>
+                <th scope="col" class="celdaBoton">&nbsp;</th>
+                <th scope="col" class="celdaCarga">&nbsp;</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let factura of facturas | busquedaFactura:busquedaNumero | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+                <th scope="row"> {{factura.numeropedido}}</th>
+                <td>{{factura.nombre}}</td>
+                <td>{{factura.estado}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFactura"
+                    (click)="obtieneDatosCompletos(factura.id)">
+                    <fa-icon [icon]="faEye"></fa-icon>&nbsp; Ver
+                  </button>
+                </td>
+                <td><button type="button" class="btn btn-danger" (click)="generaPDF(factura.id)">
+                    <fa-icon [icon]="faFileDownload"></fa-icon>&nbsp;PDF
+                  </button></td>
+                <td>
+                  <div>
+                    <button id="i" type="button" class="btn btn-primary" alt="Envía la factura por email"
+                      [disabled]="btnFactura" (click)="enviaFactura(factura.id)">
+                      <fa-icon [icon]="faPaperPlane"></fa-icon>&nbsp; Enviar e-m@il
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <!-- MODAL DE FACTURA -->
+
+    <div class="modal fade" id="modalFactura" data-backdrop="static" tabindex="-1" role="dialog"
+      aria-labelledby="modalDetallePedidoTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetallePedidoTitle">Cevichería Puerto de Manta </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid" *ngFor="let encabezado of encabezadoF">
+              <div class="row">
+                <div class="col-sm-6 label-fact">
+                  <b> <label>Orden de pedido N°: </label></b><label> {{encabezado.numeropedido}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label><b>Fecha: </b>{{encabezado.fechaFacturacion | date: 'longDate'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label><b>Cliente: </b>{{encabezado.nombre}}</label>
+                </div>
+                <div class="col-md-6 ml-auto">
+                  <label><b>Cédula: </b>{{encabezado.identificacion}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label><b>Teléfono: </b>{{encabezado.telefono}}</label>
+                </div>
+                <div class="col-md-6 ml-auto">
+                  <label><b>E-mail: </b>{{encabezado.email}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                  <label><b>Dirección: </b>{{encabezado.direccion}}</label>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <table class="table table-sm ">
+                  <thead>
+                    <tr class="table-info">
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Detalle</th>
+                      <th scope="col">P. Unitario</th>
+                      <th scope="col">P. Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let detalle of detalleF; index as i">
+                      <td>{{detalle.cantidad}}</td>
+                      <td>{{detalle.producto}}</td>
+                      <td>{{detalle.preciounitario | number : '1.2-2'}}</td>
+                      <td>{{detalle.preciototal | number : '1.2-2'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-md-5 ml-auto">
+                  <table class="table table-sm ">
+                    <tbody class="totales">
+                      <tr>
+                        <td><label>Subtotal</label></td>
+                        <td>{{encabezado.subtotal | number : '1.2-2'}} &nbsp;$</td>
+                      </tr>
+                      <tr>
+                        <td><label>IVA</label> </td>
+                        <td>{{encabezado.iva | number : '1.2-2'}} &nbsp;$</td>
+                      </tr>
+                      <tr>
+                        <td><label><b> Total </b></label> </td>
+                        <td><b>{{encabezado.total | number : '1.2-2'}} &nbsp;$</b></td>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                  <fa-icon [icon]="faCheck"></fa-icon>&nbsp;Aceptar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ____________________________________________________- -->
+  <div class="tab-pane fade" id="historial" role="tabpanel" aria-labelledby="historial-tab">
+
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="pedido">N° de Pedido</th>
+                <th scope="col">Cliente</th>
+                <th scope="col" class="celdaBoton">Estado</th>
+                <th scope="col" class="celdaBoton">&nbsp;</th>
+                <th scope="col" class="celdaBoton">&nbsp;</th>
+                <th scope="col" class="celdaCarga">&nbsp;</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let facturaP of facturasProc | busquedaFactura:busquedaNumero; index as i">
+                <th scope="row"> {{facturaP.numeropedido}}</th>
+                <td>{{facturaP.nombre}}</td>
+                <td>{{facturaP.estado}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFacturaProc"
+                    (click)="obtieneDatosCompletos(facturaP.id)">
+                    <fa-icon [icon]="faEye"></fa-icon>&nbsp; Ver
+                  </button>
+                </td>
+                <td><button type="button" class="btn btn-danger" (click)="generaPDF(facturaP.id)">
+                    <fa-icon [icon]="faFileDownload"></fa-icon>&nbsp;PDF
+                  </button></td>
+                <td>
+                  <div>
+                    <button type="button" class="btn btn-primary" alt="Envía la factura por email"
+                      [disabled]="btnFactura" (click)="enviaFactura(facturaP.id)">
+                      <fa-icon [icon]="faPaperPlane"></fa-icon>&nbsp; Enviar e-m@il
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- MODAL DE FACTURA -->
+
+    <div class="modal fade" id="modalFacturaProc" data-backdrop="static" tabindex="-1" role="dialog"
+      aria-labelledby="modalDetallePedidoTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetallePedidoTitle">Cevichería Puerto de Manta </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid" *ngFor="let encabezado of encabezadoF">
+              <div class="row">
+                <div class="col-sm-6 label-fact">
+                  <b> <label>Orden de pedido N°: </label></b><label>{{encabezado.numeropedido}}</label>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label><b>Fecha: </b>{{encabezado.fechaFacturacion | date: 'longDate'}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label><b>Cliente: </b>{{encabezado.nombre}}</label>
+                </div>
+                <div class="col-md-6 ml-auto">
+                  <label><b>Cédula: </b>{{encabezado.identificacion}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label><b>Teléfono: </b>{{encabezado.telefono}}</label>
+                </div>
+                <div class="col-md-6 ml-auto">
+                  <label><b>E-mail: </b>{{encabezado.email}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                  <label><b>Dirección: </b>{{encabezado.direccion}}</label>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <table class="table table-sm ">
+                  <thead>
+                    <tr class="table-info">
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Detalle</th>
+                      <th scope="col">P. Unitario</th>
+                      <th scope="col">P. Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let detalle of detalleF; index as i">
+                      <td>{{detalle.cantidad}}</td>
+                      <td>{{detalle.producto}}</td>
+                      <td>{{detalle.preciounitario | number : '1.2-2'}}</td>
+                      <td>{{detalle.preciototal | number : '1.2-2'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-md-5 ml-auto">
+                  <table class="table table-sm ">
+                    <tbody class="totales">
+                      <tr>
+                        <td><label>Subtotal</label></td>
+                        <td>{{encabezado.subtotal | number : '1.2-2'}} &nbsp;$</td>
+                      </tr>
+                      <tr>
+                        <td><label>IVA</label> </td>
+                        <td>{{encabezado.iva | number : '1.2-2'}} &nbsp;$</td>
+                      </tr>
+                      <tr>
+                        <td><label><b> Total </b></label> </td>
+                        <td><b>{{encabezado.total | number : '1.2-2'}} &nbsp;$</b></td>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                  <fa-icon [icon]="faCheck"></fa-icon>&nbsp;Cancelar
+                </button>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.espacio {
+    width: 12%;
+}
+.busqueda {
+    width: 50%;
+}
+.encabezado {
+    padding-top: 2%;
+}
+.encabezado h4{
+        margin-bottom: 0;
+}

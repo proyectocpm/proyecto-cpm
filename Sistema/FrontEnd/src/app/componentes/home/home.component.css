@@ -1,0 +1,27 @@
+.form-control.login-user{
+    border:0 solid #ffff !important;
+}
+.alerta {
+    padding: 0;
+}
+img {
+    height: 130px;
+}
+.card-img {
+    padding:0;
+}
+.espacio {
+    max-width: 12000px;
+    padding: 0;
+}
+.alerta {
+    padding: 0;
+    font-size: small;
+    text-align: left;
+}
+.espacio-alerta{
+    margin-bottom: 2px;
+}
+.fondo-card {
+    background-image: linear-gradient(to bottom right, #007bff85, #e6f2f794);
+}

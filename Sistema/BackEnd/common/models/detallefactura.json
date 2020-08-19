@@ -1,0 +1,59 @@
+{
+  "name": "detallefactura",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fechaFacturacion": {
+      "type": "date"
+    },
+    "cantidad": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "preciounitario": {
+      "type": "string",
+      "required": true
+    },
+    "preciototal": {
+      "type": "string",
+      "required": true
+    },
+    "numeropedido": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

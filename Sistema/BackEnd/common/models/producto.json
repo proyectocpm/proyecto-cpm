@@ -1,0 +1,62 @@
+{
+  "name": "producto",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "precio": {
+      "type": "string",
+      "required": true
+    },
+    "descripcion": {
+      "type": "string",
+      "required": false,
+      "default": "No especificado"
+    },
+    "urlImagen": {
+      "type": "string",
+      "required": true
+    },
+    "stock": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "detallefactura": {
+      "type": "hasMany",
+      "model": "pedido",
+      "foreignKey": "idproducto",
+      "required": true
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE", 
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

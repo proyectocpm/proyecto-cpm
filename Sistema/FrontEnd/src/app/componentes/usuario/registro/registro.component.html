@@ -1,0 +1,169 @@
+<app-navbar></app-navbar>
+<div class="encabezado">
+  <h4>Módulo de usuarios</h4>
+</div>
+<br>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="activo-tab" data-toggle="tab" href="#activo" role="tab" aria-controls="activo"
+      aria-selected="true">Activos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="eliminado-tab" data-toggle="tab" href="#eliminado" role="tab" aria-controls="eliminado"
+      aria-selected="false">Eliminados</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="activo" role="tabpanel" aria-labelledby="activo-tab">
+
+    <div class="row mt-5">
+      <div class="col">
+        <button type="button" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalusuario"
+          (click)="reseteoForm()">
+          <fa-icon [icon]="faUserPlus"></fa-icon>&nbsp;Nuevo Usuario
+        </button>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Email</th>
+              <th scope="col">Rol</th>
+              <th scope="col" class="espacio">&nbsp;</th>
+              <th scope="col" class="espacioE">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuario of usuarios | paginate: {itemsPerPage: 5, currentPage: paginaActual}; index as i">
+              <th scope="row"> {{i+1}}</th>
+              <td>{{usuario.nombre}}</td>
+              <td>{{usuario.email}}</td>
+              <td>{{usuario.rol}}</td>
+              <td>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalusuario"
+                  (click)="seleccionaUsuario(usuario)">
+                  <fa-icon [icon]="faUserEdit"></fa-icon>&nbsp; Editar
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-danger" (click)="eliminaUsuario(usuario.id)">
+                  <fa-icon [icon]="faUserTimes"></fa-icon>&nbsp; Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+      </div>
+    </div>
+
+    <!-- MODAL REGISTRO / ACTUALIZACION-->
+    <div id="modalusuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="h3 mb-3 font-weight-normal" *ngIf="!error">
+              {{!this.authService.seleccionaUsuario.id ? 'Nuevo Usuario' : 'Actualizar Usuario'}} </h3>
+            <div class="alert alert-danger alertaU" role="alert" *ngIf="error"> -Los campos con (*) son obligatorios
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal-fuente">
+            <form #formRegister="ngForm" (ngSubmit)="guardaUsuario(formRegister)">
+
+              <input type="hidden" id="id" name="id" class="form-control"
+                [(ngModel)]="this.authService.seleccionaUsuario.id">
+              <div class="form-group espacio-alerta">
+                <label for="nombre">* Nombre</label>
+                <input type="text" #nombre="ngModel" name="nombre" class="form-control" placeholder="Nombre"
+                  [(ngModel)]="this.authService.seleccionaUsuario.nombre" required>
+              </div>
+              <div class="alert alert-light alerta espacio-alerta" role="alert" *ngIf="existeNombre"> -{{mensajeNombre}}
+              </div>
+              <div class="alert alert-light alerta espacio-alerta" role="alert"
+                *ngIf="nombre.touched && !nombre.valid">
+                <div *ngIf="nombre.errors.required">- Ingrese el nombre del usuario</div>
+              </div>
+              <div class="form-group espacio-alerta">
+                <label for="nombre">* Email</label>
+                <input type="email" name="email" #email="ngModel" class="form-control" placeholder="Email"
+                  [(ngModel)]="this.authService.seleccionaUsuario.email"
+                  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+              </div>
+              <div class="alert alert-light alerta espacio-alerta" role="alert" *ngIf="existe"> -{{mensaje}} </div>
+              <div class="alert alert-light alerta espacio-alerta" role="alert" *ngIf="email.touched && !email.valid">
+                <div *ngIf="email.errors.required">- Ingrese el email del usuario</div>
+                <div *ngIf="email.errors.pattern">- Ingrese un email válido</div>
+              </div>
+              <div class="form-group espacio-alerta">
+                <label for="nombre">* Contraseña</label>
+                <input type="password" #password="ngModel" name="password" class="form-control" placeholder="Contraseña"
+                  [(ngModel)]="this.authService.seleccionaUsuario.password" minlength="6" required>
+              </div>
+              <div class="alert alert-light alerta espacio-alerta" role="alert"
+                *ngIf="password.touched && !password.valid">
+                <div *ngIf="password.errors.required">- Ingrese la contraseña del usuario</div>
+                <div *ngIf="password.errors.minlength">- La contraseña debe tener mínimo 6 caracteres</div>
+              </div>
+              <div class="form-group espacio-alerta">
+                <label for="idcategoria">* Rol</label>
+                <select name="roleId" #roleId="ngModel" class="form-control"
+                  [(ngModel)]="this.authService.seleccionaUsuario.roleId" required>
+                  <option selected disabled>- seleccione el rol -</option>
+                  <option value="1">Administrador</option>
+                  <option value="2">Empleado</option>
+                </select>
+                <div class="alert alert-light alerta espacio-alerta" role="alert"
+                  *ngIf="roleId.touched && !roleId.valid">
+                  <div *ngIf="roleId.errors.required"> - Seleccione el rol a asignar</div>
+                </div>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-lg btn-primary btn-block">
+                <fa-icon [icon]="faSave"></fa-icon>&nbsp; Guardar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ____ Eliminados _______-->
+  <div class="tab-pane fade" id="eliminado" role="tabpanel" aria-labelledby="eliminado-tab">
+    <div class="row mt-5">
+      <div class="col">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Email</th>
+              <th scope="col">Rol</th>
+              <th scope="col" class="espacioR">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuarioE of usuariosE | paginate: {itemsPerPage: 5, currentPage: paginaActual}; index as i">
+              <th scope="row"> {{i+1}}</th>
+              <td>{{usuarioE.nombre}}</td>
+              <td>{{usuarioE.email}}</td>
+              <td>{{usuarioE.rol}}</td>
+              <td>
+                <button class="btn btn-primary" (click)="restableceUsuario(usuarioE.id)">
+                  <fa-icon [icon]="faUserCheck"></fa-icon>&nbsp; Reestablecer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,178 @@
+<app-navbar></app-navbar>
+<div class="encabezado">
+  <h4>Módulo de pedidos</h4>
+</div>
+<br>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="reciente-tab" data-toggle="tab" href="#reciente" role="tab" aria-controls="reciente"
+      aria-selected="true">Reciente</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="historial-tab" data-toggle="tab" href="#historial" role="tab" aria-controls="historial"
+      aria-selected="false">Historial</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="reciente" role="tabpanel" aria-labelledby="reciente-tab">
+    <div class="row mt-5">
+      <div class="col tabla">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" class="espacio">Número pedido</th>
+              <th scope="col" class="espacio">Productos pedidos</th>
+              <th scope="col" class="espacio">Estado</th>
+              <th scope="col" class="espacio">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pedido of pedidos | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+              <td>{{pedido.numeropedido}}</td>
+              <td>{{pedido.items}}</td>
+              <td>{{pedido.estado}}</td>
+              <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDetallePedido"
+                  (click)="obtieneDetalle(pedido.numeropedido)">
+                  <fa-icon [icon]="faEye"></fa-icon> Ver
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+      </div>
+    </div>
+ 
+    <!--MODAL de detalle de pedido-->
+
+    <div class="modal fade" id="modalDetallePedido" data-backdrop="static" tabindex="-1" role="dialog"
+      aria-labelledby="modalDetallePedidoTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetallePedidoTitle">Detalle de pedido </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-sm ">
+              <thead>
+                <tr class="table-info celdas">
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Plato</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detalle of detallePedido; index as i" class="celdas">
+                  <td>{{detalle.cantidad}}</td>
+                  <td>{{detalle.nombreProducto}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="#" class="badge badge-info" data-toggle="collapse" href="#collapseExample" role="button"
+              aria-expanded="false" aria-controls="collapseExample">Contacto</a>
+            <div class="collapse" id="collapseExample" *ngFor="let cliente of contacto">
+              <div class="card card-body contacto">
+                <p><b>Cliente: </b> {{cliente.nombre}}</p>
+                <p><b>Teléfono: </b> {{cliente.telefono}}</p>
+                <p><b>Dirección de entrega: </b> {{cliente.direccionEnvio}}</p>
+                <p><b>Sector: </b> {{cliente.sector}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              <fa-icon [icon]="faTimes"></fa-icon>&nbsp;Cancelar
+            </button>
+            <button class="btn btn-primary" (click)="insertaDetalle()">
+              <fa-icon [icon]="faFileInvoiceDollar"></fa-icon>&nbsp;Procesar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ___ 2 PESATAÑA ____-->
+  <div class="tab-pane fade" id="historial" role="tabpanel" aria-labelledby="historial-tab">
+    <div class="row mt-5">
+      <div class="col">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" class="espacioH">Número pedido</th>
+              <th scope="col" class="espacioH">Fecha</th>
+              <th scope="col" class="espacioH">Productos pedidos</th>
+              <th scope="col" class="espacioH">Estado</th>
+              <th scope="col" class="espacioH">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pedidoH of pedidosHis">
+              <td>{{pedidoH.numeropedido}}</td>
+              <td>{{pedidoH.fechaPedido | date: 'dd-MM-yyyy'}}</td>
+              <td>{{pedidoH.items}}</td>
+              <td>{{pedidoH.estado}}</td>
+              <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDetallePedidoHis"
+                  (click)="obtieneDetalle(pedidoH.numeropedido)">
+                  <fa-icon [icon]="faEye"></fa-icon> Ver
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--MODAL de detalle de pedido-->
+    <div class="modal fade" id="modalDetallePedidoHis" data-backdrop="static" tabindex="-1" role="dialog"
+      aria-labelledby="modalDetallePedidoTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetallePedidoTitle">Detalle de pedido enviado</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-sm ">
+              <thead>
+                <tr class="table-info celdas">
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Plato</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detalle of detallePedido; index as i" class="celdas">
+                  <td>{{detalle.cantidad}}</td>
+                  <td>{{detalle.nombreProducto}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="#" class="badge badge-info" data-toggle="collapse" href="#collapseExample" role="button"
+              aria-expanded="false" aria-controls="collapseExample">Contacto</a>
+
+            <div class="collapse" id="collapseExample" *ngFor="let cliente of contactoH">
+              <div class="card card-body contacto">
+                <p> <b>Cliente: </b> {{cliente.nombre}}</p>
+                <p><b>Teléfono: </b> {{cliente.telefono}}</p>
+                <p><b>Dirección de entrega: </b> {{cliente.direccionEnvioH}}</p>
+                <p><b>Sector: </b> {{cliente.sector}}</p> 
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal">
+              <fa-icon [icon]="faCheck"></fa-icon>&nbsp;Aceptar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,53 @@
+.form-control.login-user {
+    border: 0px solid #fff !important;
+  }
+  .espacio {
+    width: 12%;
+    padding: 0;
+}
+.espacioE {
+  width: 14%;
+  padding: 0;
+}
+.espacioR {
+  width: 18%;
+  padding: 0;
+}
+.modal-header{
+  padding-bottom: 0;
+}
+.alerta-vacio {
+  padding: 5px;
+  margin: 0;
+  margin-left: 36%;
+}
+.alerta {
+  padding: 0;
+  color: #d21212;
+  font-size: small;
+  width: 85%;
+}
+.alertaU {
+  padding: 0;
+  color: #d21212;
+  font-size: 12px;
+  width: 85%;
+}
+.espacio-alerta{
+  margin-bottom: 2px;
+}
+.modal-fuente {
+  font-size: 14px;
+}
+.modal-fuente input{
+  height: 30px;
+}
+select {
+  height: 35px;
+}
+.encabezado {
+    padding-top: 2%;
+}
+.encabezado h4{
+        margin-bottom: 0;
+}

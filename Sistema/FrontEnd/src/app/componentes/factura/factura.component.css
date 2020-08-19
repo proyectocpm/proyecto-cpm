@@ -1,0 +1,52 @@
+.label-fact {
+    text-align: right;
+    padding-right: 0px;
+}
+.input-fact {
+    padding-right: 40px;
+    padding-left: 0;
+}
+.input-fact input{
+    height: 26px;
+}
+.interruptor {
+    padding-left: 0;
+}
+.totales {
+    text-align: right;
+}
+.totales td {
+    padding: 0;
+}
+.totales label {
+    padding-right: 33px;
+}
+.busqueda {
+    width: 50%;
+}
+.encabezado {
+    padding-top: 2%;
+    height: 85px;
+}
+.encabezado h4{
+        margin-bottom: 0;   
+}
+.form-search {
+    text-align: end;
+}
+.cargaArchivo {
+    width: 112%;
+    text-align: left;
+}
+.celdaCarga {
+    width: 24%;
+}
+.celdaBoton { 
+    width: 10%;
+}
+.container {
+    padding: 0;
+}
+.pedido {
+    width: 12%;
+}

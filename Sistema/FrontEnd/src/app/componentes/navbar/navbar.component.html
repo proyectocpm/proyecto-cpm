@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+  <img src="../../../assets/logo_1.jpg" class="logo" routerLink="/">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
+    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNavbar">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a> </a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto menu ">
+      <li class="nav-item" *ngIf="isLogged && rolAutorizado && estado">
+        <a class="nav-link" routerLink="/plato">
+          <fa-icon [icon]="faUtensils"></fa-icon>&nbsp;Platos
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged && estado">
+        <a class="nav-link" routerLink="/pedido">
+          <fa-icon [icon]="faClipboardList"></fa-icon>&nbsp;Pedido
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged && estado">
+        <a class="nav-link" routerLink="/orden_pedido">
+          <fa-icon [icon]="faCashRegister"></fa-icon>&nbsp;Orden pedido
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged && rolAutorizado && estado">
+        <a class="nav-link" routerLink="/usuario/registro">
+          <fa-icon [icon]="faUserCog"></fa-icon>&nbsp;Usuario
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!isLogged">
+        <a class="nav-link" routerLink="/usuario/login">
+          <fa-icon [icon]="faSignInAlt"></fa-icon>&nbsp;Login
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged">
+        <a href="#" class="nav-link" (click)="onLogout()">
+          <fa-icon [icon]="faSignOutAlt"></fa-icon>&nbsp;Salir
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

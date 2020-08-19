@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+<div class="encabezado">
+  <h4>Módulo plato</h4>
+</div>
+<div class="row mt-5">
+  <div class="col">
+    <div class="form-group">
+      <mat-form-field class="busqueda">
+        <input matInput type="text" placeholder="Buscar producto" [(ngModel)]="busquedaNombre">
+        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="busquedaNombre=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button type="button" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalproducto"
+        (click)="reseteoForm()">
+        <fa-icon [icon]="faPlus"></fa-icon>&nbsp;Nuevo Plato
+      </button>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Categoría</th>
+          <th scope="col" class="espacio">&nbsp;</th>
+          <th scope="col" class="espacio">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let producto of productos | busquedaProducto:busquedaNombre | paginate: {itemsPerPage: 5, currentPage: paginaActual}; index as i">
+          <th scope="row"> {{i+1}}</th>
+
+          <td>{{producto.nombre}}</td>
+          <td>{{producto.precio | number : '1.2-2'}}$</td>
+          <td>{{producto.descripcion}}</td>
+          <td>{{producto.stock}}</td>
+          <td>{{producto.categoria}}</td>
+          <td>
+            <button class="btn btn-primary" (click)=" actualizaProducto(producto)" data-toggle="modal"
+              data-target="#modalproducto">
+              <fa-icon [icon]="faEdit"></fa-icon>&nbsp; Editar
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="eliminarProducto(producto.id)">
+              <fa-icon [icon]="faTrashAlt"></fa-icon>&nbsp; Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+  </div>
+</div>
+<app-modal></app-modal>
