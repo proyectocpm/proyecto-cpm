@@ -1,0 +1,44 @@
+<ion-content class="background">
+  <div class="encabezado">
+    <ion-label>
+      <h1><b>Iniciar Sesión</b></h1>
+    </ion-label>
+  </div>
+  <form #formLogin="ngForm" (ngSubmit)="inicioSesion(formLogin)">
+    <ion-chip outline class="alerta" color="danger" *ngIf="error">
+      <ion-label>- Email o contraseña incorrectos</ion-label>
+    </ion-chip>
+    <div class="form-login">
+      <div class="input-login">
+        <ion-item class="color">
+          <ion-label position="floating">* E-mail</ion-label>
+          <ion-input name="email" type="email" #email="ngModel" [(ngModel)]="cliente.email"
+            pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+          </ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="email.touched && !email.valid">
+          <ion-label *ngIf="email.errors.required">- Ingrese su email</ion-label>
+          <ion-label *ngIf="email.errors.pattern">- E-mail no válido (Ej. ejemplo@cpm.com)</ion-label>
+        </ion-chip>
+
+        <ion-item class="color">
+          <ion-label position="floating">* Password</ion-label>
+          <ion-input name="password" type="password" #password="ngModel" [(ngModel)]="cliente.password" required>
+          </ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="password.touched && !password.valid">
+          <ion-label *ngIf="password.errors.required">- Ingrese su contraseña</ion-label>
+        </ion-chip>
+      </div>
+      <div class="login-button">
+        <ion-button type="Submit" expand="block">Entrar</ion-button>
+      </div>
+    </div>
+  </form>
+  <div class="nueva-cuenta">
+    <a [routerLink]="['/registro']">Crear cuenta</a>
+  </div>
+</ion-content>
+<footer class="footer">
+  CPM-593
+</footer>

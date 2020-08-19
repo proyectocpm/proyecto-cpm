@@ -1,0 +1,8 @@
+{
+  "name": "CPMapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "08d8dbc2"
+}

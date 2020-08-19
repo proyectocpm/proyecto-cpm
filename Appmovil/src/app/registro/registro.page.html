@@ -1,0 +1,71 @@
+
+<ion-content class="background">
+  <div class="encabezado">
+    <ion-buttons slot="start">
+    <ion-back-button  defaultHref="/login"></ion-back-button>
+    <h2 *ngIf="!error"> <b>Registro</b> </h2>
+    <ion-chip outline class="alerta" color="danger" *ngIf="error" >
+      <ion-label>- Debe llenar todo el formulario</ion-label>
+    </ion-chip>
+
+  </ion-buttons>
+  </div>
+  <div class="form-registro">
+    <form #formRegistro="ngForm" (ngSubmit)="guardaCliente(formRegistro)">
+      <ion-grid>
+        <ion-row >
+          <ion-col>
+            <div padding>
+              <ion-item class="color">
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input name="nombre" type="text-center" #nombre=ngModel [(ngModel)]="cliente.nombre" pattern="[a-zA-Z\sáéíóúñÁÉÍÓÚÑ]{3,100}" required>
+                </ion-input>
+              </ion-item>
+              <ion-chip outline class="alerta-input" color="danger" *ngIf="nombre.touched && !nombre.valid" >
+                <ion-label *ngIf="nombre.errors.required">- Campo obligatorio</ion-label>
+                <ion-label *ngIf="nombre.errors.pattern">- Solo admite caracteres alfabéticos (min. 3)</ion-label>
+              </ion-chip>
+
+              <ion-item class="color">
+                <ion-label position="floating">Apellido</ion-label>
+                <ion-input name="apellido" type="text-center" #apellido="ngModel" [(ngModel)]="cliente.apellido" pattern="[a-zA-Z\sáéíóúñÁÉÍÓÚÑ]{3,100}" required></ion-input>
+              </ion-item>
+              <ion-chip outline class="alerta-input" color="danger" *ngIf="apellido.touched && !apellido.valid" >
+                <ion-label *ngIf="apellido.errors.required">- Campo obligatorio</ion-label>
+                <ion-label *ngIf="apellido.errors.pattern">- Solo admite caracteres alfabéticos (min. 3)</ion-label>
+              </ion-chip>
+
+              <ion-item class="color">
+                <ion-label position="floating">E-mail</ion-label>
+                <ion-input name="email" type="email" #email="ngModel" [(ngModel)]="cliente.email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required></ion-input>
+              </ion-item>
+              <ion-chip outline class="alerta-input" color="danger" *ngIf="existe" >
+                <ion-label>- {{mensaje}}</ion-label>
+              </ion-chip>
+              
+              <ion-chip outline class="alerta-input" color="danger" *ngIf="email.touched && !email.valid" >
+                <ion-label *ngIf="email.errors.required">- Campo obligatorio</ion-label>
+                <ion-label *ngIf="email.errors.pattern">- E-mail no válido (Ej. ejemplo@cpm.com)</ion-label>
+              </ion-chip>
+
+              <ion-item class="color">
+                <ion-label position="floating">Contraseña</ion-label>
+                <ion-input name="password" type="password" #password="ngModel" [(ngModel)]="cliente.password" minlength="6" required>
+                </ion-input>
+              </ion-item>
+              <ion-chip outline class="alerta-input" color="danger" *ngIf="password.touched && !password.valid" >
+                <ion-label *ngIf="password.errors.required">- Campo obligatorio</ion-label>
+                <ion-label *ngIf="password.errors.minlength">- Debe tener mínimo 6 caracteres</ion-label>
+              </ion-chip>
+            </div>
+            <div class="registra">
+              <ion-button type="Submit" expand="block"> Registrar
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+
+</ion-content>

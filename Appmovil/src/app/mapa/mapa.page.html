@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>mapa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab vertical="top" horizontal="end" *ngIf="finaliza" class="color">
+    <ion-fab-button (click)="finCompra()">
+      <ion-icon name="cart-outline"></ion-icon>
+      <ion-label>{{contadorProducto}}</ion-label>
+    </ion-fab-button>
+  </ion-fab>
+  <div id="map"></div>
+</ion-content>

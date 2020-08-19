@@ -1,0 +1,32 @@
+ion-select {
+    margin-left: 15px;
+    padding: 0;
+    font-stretch: extra-condensed;
+}
+.seleccion {
+    margin-right: 2%;
+}
+.seleccion ion-checkbox {
+    margin-right: 4%;
+}
+
+.in-item {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+ion-item {
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+}
+.contador {
+    margin-right: 3%;
+}
+.contador ion-label {
+    font-size: 18px;
+}
+.finalizar ion-button {
+    margin: 0;
+}
+.color {
+    color: #006699;
+}

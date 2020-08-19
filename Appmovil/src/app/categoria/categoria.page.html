@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Categoria
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab vertical="top" horizontal="end" *ngIf="finaliza" class="color">
+    <ion-fab-button (click)="finCompra()">
+      <ion-icon  name="cart-outline"></ion-icon>
+      <ion-label>{{contadorProducto}}</ion-label>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let categoria of categorias" class="cards">
+          <ion-card class="contenedor">
+            <ion-img [src]="categoria.urlImagen" [routerLink]="['/menu/categoria',categoria.id]"></ion-img>
+            <div class="texto">
+              <ion-label><b>{{categoria.nombreCategoria}} </b></ion-label>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+
+</ion-content>

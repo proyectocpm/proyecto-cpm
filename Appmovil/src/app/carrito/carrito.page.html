@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title> Carrito </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" *ngIf ="this.dataApi.contadorProductos == 0">
+  <h3>Su carrito está vacío</h3>
+</ion-content>
+<ion-content [fullscreen]="true" *ngIf ="this.dataApi.contadorProductos != 0">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalle de compra</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="pago">
+      <ion-item class="ion-no-padding" *ngFor="let detalle of detallePedido">
+
+        <ion-col size="1">{{detalle.cantidad}}</ion-col>
+        <ion-col size="8">&nbsp;{{detalle.nombre}}</ion-col>
+        <ion-col size="3">$ {{detalle.precioT | number : '1.2-2'}}</ion-col>
+
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalle de pago</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item class="ion-no-padding">
+        <ion-col>Valor compra:</ion-col>
+        <ion-col>$ {{totalCompra | number : '1.2-2'}}</ion-col>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-col>Valor Envío:</ion-col>
+        <ion-col>$ 1.50</ion-col>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-col>TOTAL A PAGAR:</ion-col>
+        <ion-col>$ {{totalPagar | number : '1.2-2'}}</ion-col>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-button color="success" expand="block" (click)="direccionEnvio()">Continuar</ion-button>
+</ion-content>

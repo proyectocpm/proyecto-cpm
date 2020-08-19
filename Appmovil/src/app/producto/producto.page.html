@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{categoria.nombreCategoria}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu/categoria"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end"  *ngIf="finaliza" >
+  <ion-fab-button color="medium" (click)="finCompra()">
+    <ion-icon class="color" name="cart-outline"></ion-icon>
+    <ion-label class="color">{{cont}}</ion-label>
+  </ion-fab-button>
+</ion-fab>
+<ion-content>
+
+    <ion-list>
+      <ion-item class="ion-no-padding" *ngFor="let producto of productos">
+        <ion-item class="seleccion" slot="start">
+          <ion-checkbox mode="ios" slot="start" color="secondary" [(ngModel)]="producto.seleccion" (ionChange)="selecciona($event, producto.id)"></ion-checkbox>
+        </ion-item>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="[producto.urlImagen]"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>{{producto.nombre}}</h3>
+          <p>Precio: ${{producto.precio}}</p>
+          <p>{{producto.descripcion}} &nbsp;&nbsp;&nbsp;</p>
+        </ion-label>
+
+        <ion-item class="contador" *ngIf="producto.visible === 1">
+          <ion-button shape="round" (click)="disminuye(producto.id)" >-</ion-button>&nbsp; <ion-label>{{producto.cantidad}}</ion-label>&nbsp;<ion-button shape="round" (click) = "incrementa(producto.id)">+</ion-button>
+        </ion-item>
+      </ion-item>
+    </ion-list>
+</ion-content>

@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Total a pagar: $ {{total | number : '1.2-2'}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu/carrito" (click)="cierraModal()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #formDireccion="ngForm" (ngSubmit)="guardaDireccionEnvio(formDireccion)">
+    <ion-chip outline class="alerta" color="danger" *ngIf="error">
+      <ion-label>- Ingrese los datos para el envío</ion-label>
+    </ion-chip>
+    <ion-card class="ion-no-padding">
+      <ion-card-header>
+        <ion-card-title>Dirección de entrega</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input type="hidden" name="idcliente" [(ngModel)]="cliente.id"></ion-input>
+        <ion-item class="color">
+          <ion-label position="floating">Sector</ion-label>
+          <ion-input name="sector" type="text-center" #sector=ngModel
+            [(ngModel)]="direccionEnvio.sector" pattern="[A-Za-z0-9]+" required></ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="sector.touched && !sector.valid" >
+          <ion-label *ngIf="sector.errors.pattern">- Campo letras y numeros</ion-label>
+          <ion-label *ngIf="sector.errors.required">- Campo obligatorio</ion-label>
+        </ion-chip>
+        <ion-item class="color">
+          <ion-label position="floating">Calle principal</ion-label>
+          <ion-input name="callePrincipal" type="text-center" #callePrincipal=ngModel
+            [(ngModel)]="direccionEnvio.callePrincipal" pattern="[A-Za-z0-9]+" required></ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="callePrincipal.touched && !callePrincipal.valid" >
+          <ion-label *ngIf="callePrincipal.errors.pattern">- Campo letras y numeros</ion-label>
+          <ion-label *ngIf="callePrincipal.errors.required">- Campo obligatorio</ion-label>
+        </ion-chip>
+        <ion-item class="color">
+          <ion-label position="floating">Calle secundaria</ion-label>
+          <ion-input name="calleSecundaria" type="text-center" #calleSecundaria=ngModel
+            [(ngModel)]="direccionEnvio.calleSecundaria" pattern="[A-Za-z0-9]+" required></ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="calleSecundaria.touched && !calleSecundaria.valid" >
+          <ion-label *ngIf="calleSecundaria.errors.pattern">- Campo letras y numeros</ion-label>
+          <ion-label *ngIf="calleSecundaria.errors.required">- Campo obligatorio</ion-label>
+        </ion-chip>
+        <ion-item class="color">
+          <ion-label position="floating">Numeración</ion-label>
+          <ion-input name="numero" type="text-center" #numero=ngModel [(ngModel)]="direccionEnvio.numero"  pattern="[A-Za-z0-9]+" required>
+          </ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="numero.touched && !numero.valid" >
+          <ion-label *ngIf="numero.errors.pattern">- Campo letras y numeros</ion-label>
+          <ion-label *ngIf="numero.errors.required">- Campo obligatorio</ion-label>
+        </ion-chip>
+        <ion-item class="color">
+          <ion-label position="floating">Referencia</ion-label>
+          <ion-input name="referencia" type="text-center" #referencia=ngModel [(ngModel)]="direccionEnvio.referencia"  pattern="[A-Za-z0-9]+"
+            required></ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="referencia.touched && !referencia.valid" >
+          <ion-label *ngIf="referencia.errors.pattern">- Campo letras y numeros</ion-label>
+          <ion-label *ngIf="referencia.errors.required">- Campo obligatorio</ion-label>
+        </ion-chip>
+        <ion-item >
+          <ion-input name="numeropedido" type="hidden" [(ngModel)]="this.numeropedido"
+            ></ion-input>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Datos para factura</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Nombre: {{cliente.nombre}}&nbsp;{{cliente.apellido}}</ion-label>
+        </ion-item>
+        <ion-item class="color">
+          <ion-label position="floating">Cédula: </ion-label>
+          <ion-input name="identificacion" type="text-center" #identificacion=ngModel
+            [(ngModel)]="cliente.identificacion" min="0" pattern="^[0-9]\d*$" minlength="10" maxlength="10" required></ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="identificacion.touched && !identificacion.valid" >
+          <ion-label *ngIf="identificacion.errors.required">- Campo obligatorio</ion-label>
+          <ion-label *ngIf="identificacion.errors.pattern">- Solo admite números</ion-label>
+          <ion-label *ngIf="identificacion.errors.minlength">- Debe tener 10 dígitos</ion-label>
+        </ion-chip>
+        <ion-item class="color">
+          <ion-label position="floating">Telefono: </ion-label>
+          <ion-input name="telefono" type="text" #telefono="ngModel" [(ngModel)]="cliente.telefono" min="0" pattern="^[0-9]\d*$" minlength="7" maxlength="10" required>
+          </ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="telefono.touched && !telefono.valid" >
+          <ion-label *ngIf="telefono.errors.required">- Campo obligatorio</ion-label>
+          <ion-label *ngIf="telefono.errors.pattern">- Solo admite números</ion-label>
+          <ion-label *ngIf="telefono.errors.minlength">- Debe tener al menos 7 dígitos</ion-label>
+          <ion-label *ngIf="telefono.errors.maxlength">- No puede tener más de 10 dígitos</ion-label>
+        </ion-chip>
+        <ion-item>
+          <ion-label>Email: {{cliente.email}}</ion-label>
+        </ion-item>
+        <ion-item class="color">
+          <ion-label position="floating">Dirección: </ion-label>
+          <ion-input name="direccion" #direccion=ngModel
+            [(ngModel)]="cliente.direccion" minlength="5" maxlength="100" required>
+          </ion-input>
+        </ion-item>
+        <ion-chip outline class="alerta-input" color="danger" *ngIf="direccion.touched && !direccion.valid">
+          <ion-label *ngIf="direccion.errors.required">- Campo obligatorio</ion-label>
+          <ion-label *ngIf="direccion.errors.minlength">- Al menos un nombre de 5 caracteres</ion-label>
+        </ion-chip>
+      </ion-card-content>
+    </ion-card>
+    <ion-button type="submit" color="success" expand="block" (click)="creaNumeroPedido()">Finalizar</ion-button>
+  </form>
+</ion-content>

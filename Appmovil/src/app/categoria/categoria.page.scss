@@ -1,0 +1,30 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+.cards {
+  padding: 0;
+}
+.contenedor {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+.texto{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 15px;
+  font-family: cursive;
+  color: rgb(10, 44, 73);
+  text-align: start;
+}
+
+.contenedor ion-img{
+width: 156px;
+height: 125px;
+object-fit: fill;
+opacity: 0.6;
+}
+ .color ion-label ion-icon {
+   color: #006699;
+ }

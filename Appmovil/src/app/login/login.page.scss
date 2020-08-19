@@ -1,0 +1,57 @@
+
+ion-content.background {
+    --background: url(../../assets/f1.png) ;
+    --background-repeat: no-repeat;
+    --background-attachment: fixed;
+    --opacity: 0.8;
+}
+.form-login {
+    margin-top: 35%;
+    margin-left: 3%;
+    margin-right: 3%;
+    background-color: rgba(255, 255, 255, 0.582);
+}
+.input-login {
+    padding-top: 10%;
+    margin-left: 4%;
+    margin-right: 4%;
+    padding-bottom: 3%;
+}
+ion-item.color {
+    --background: rgba(255, 255, 255, 0.637);
+    --color: #0f8bb5;
+    margin-bottom: 3%;
+}
+.encabezado {
+    text-align: center;
+    color:#1a9ac5;
+    margin-top: 15%;
+}
+.encabezado h1 {
+    font-size: 34px;
+}
+.login-button {
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-bottom: 3%;
+}
+.nueva-cuenta {
+    text-align: center;
+    padding-top: 5%;
+}
+.footer {
+    background: #fcf9ed40;
+    color: #0f8bb5;
+    text-align: center;
+}
+
+.alerta {
+    border: none;
+}
+.alerta-input {
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    height: 24px;
+}
